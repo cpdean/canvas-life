@@ -5,7 +5,7 @@ var Zeds = function() {
     z.canvas.width = 600;
     z.canvas.height = 400;
 
-    var Agent = function(x,y){
+    var Agent = function(x,y) {
         this.x = x;
         this.y = y;
         this.width = this.height = 10;
@@ -19,7 +19,8 @@ var Zeds = function() {
         this.intelligence = 1;
         this.color = "#eee";
     };
-    Agent.prototype.draw = function(){
+
+    Agent.prototype.draw = function() {
         var half_w = this.width / 2;
         var half_h = this.height / 2;
         z.ctx.fillStyle = this.color;
@@ -28,7 +29,7 @@ var Zeds = function() {
 
     };
 
-    var Squirrel = function(x,y){
+    var Squirrel = function(x,y) {
         Agent.call(this,x,y);
         this.color = "#994";
     };
@@ -41,7 +42,7 @@ var Zeds = function() {
     Zombie.prototype = new Agent();
 
 
-    z.start = function(){
+    z.start = function() {
         //background
         z.ctx.fillStyle = "#332";
         z.ctx.fillRect(0,0,z.canvas.width,z.canvas.height);
