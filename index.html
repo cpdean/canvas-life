@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <title>zeds</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="underscore.js"></script>
+    <script type="text/javascript" src="zeds.js"></script>
+    <style>
+        body {
+            background-color: #999;
+            color: #efe;
+            text-align:center;
+        }
+        canvas {
+            margin: auto;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1>ZOMBIES</h1>
+    <canvas id="board"></canvas>
+    <script>
+        var game = new Zeds();
+        game.start();
+    </script>
+</body>
+</html>
