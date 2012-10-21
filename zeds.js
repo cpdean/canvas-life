@@ -67,8 +67,46 @@ var Zeds = function() {
 
 
     var Squirrel = function(x,y) {
+        var squirrel = this;
         Agent.call(this,x,y);
         this.color = "#994";
+        this.next_action = function() {
+            //Squirrels are pretty food driven...
+ 
+            // ARE YOU GON DIE??
+            if (this.hunger <= 0) {
+                return this.next_action = this.death;
+            }
+
+            // CAN YOU EAT???
+            var food = z.mushrooms();
+            var touching_food = _.filter(food, function(f) {
+                var touch_distance = squirrel.width;
+                return touch_distance <= squirrel.distance(f);
+            });
+            if (touching_food.length > 0) {
+                // return a function that will eat the food
+                return this.next_action = this.next_eat(touching_food[0]);
+            }
+
+            // WHERE IS NEAREST FOOD???
+            var sorted_foods = _.sortBy(food, function(f) {
+                return squirrel.distance(f);
+            });
+
+            // return a function to move to the nearest food
+            return this.next_action = this.move_to(food[0]);
+
+        };
+
+        this.next_eat = function(food_agent) {
+            // eat the food, removing it from the game
+        };
+        this.move_to = function(food_agent) {
+            // move to the other agent, landing on it or going as far
+            // as possible
+        };
+
     };
     Squirrel.prototype = new Agent();
 
