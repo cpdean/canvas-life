@@ -75,6 +75,8 @@ var Zeds = function() {
         Agent.call(this,x,y);
         this.width = this.height = 10;
         this.hunger_decay = -5;
+        var default_mushroom_color = "#ddd";
+        this.color = default_mushroom_color;
         this.setup_next_action = function() {
             if (this.hunger >= 200) {
                 this.next_action = this.reproduce;
