@@ -4,7 +4,7 @@ var Zeds = function() {
     z.ctx = z.canvas.getContext("2d");
     z.canvas.width = 600;
     z.canvas.height = 400;
-    z.FPS = 10;
+    z.FPS = 5;
 
     var Agent = function(x,y) {
         this.x = x;
