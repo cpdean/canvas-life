@@ -85,6 +85,13 @@ var Zeds = function() {
 
         this.reproduce = function() {
 
+            this.hunger = 1;
+            var x = Math.random() * z.canvas.width;
+            var y = Math.random() * z.canvas.height;
+            var m = new Mushroom(x,y);
+
+            // prevent new mushroom from getting added
+            // to the game if it's near another
             var there_is_nearby_fungus = false;
 
             var fungus_agents = _.filter(z.agents, function(a){
@@ -95,27 +102,20 @@ var Zeds = function() {
                 if (mushroom == fung) {
                     return false;
                 }
-                debugger;
                 var too_close = 100;
                 var x_d, y_d, distance;
-                x_d = (mushroom.x - fung.x);
+                x_d = (m.x - fung.x);
                 x_d = x_d * x_d;
-                y_d = (mushroom.y - fung.y);
+                y_d = (m.y - fung.y);
                 y_d = y_d * y_d;
                 distance = Math.sqrt(x_d * y_d);
                 return distance < too_close;
             });
 
-            if(there_is_nearby_fungus){
-                // give up early
-                return this;
+            if(!there_is_nearby_fungus){
+                z.agents.push(m);
             }
 
-            this.hunger = 1;
-            var x = Math.random() * z.canvas.width;
-            var y = Math.random() * z.canvas.height;
-            var m = new Mushroom(x,y);
-            z.agents.push(m);
             return this;
         };
     };
