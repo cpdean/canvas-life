@@ -92,6 +92,15 @@ var Zeds = function() {
             }
         };
 
+        var distance = function(x1, y1, x2, y2) {
+            var x_d, y_d;
+            x_d = (x1 - x2);
+            x_d = x_d * x_d;
+            y_d = (y1- y2);
+            y_d = y_d * y_d;
+            return Math.sqrt(x_d * y_d);
+        };
+
         this.reproduce = function() {
 
             this.hunger = 1;
@@ -109,13 +118,8 @@ var Zeds = function() {
 
             there_is_nearby_fungus = _.any(fungus_agents, function(fung){
                 var too_close = 100;
-                var x_d, y_d, distance;
-                x_d = (m.x - fung.x);
-                x_d = x_d * x_d;
-                y_d = (m.y - fung.y);
-                y_d = y_d * y_d;
-                distance = Math.sqrt(x_d * y_d);
-                return distance < too_close;
+                dist = distance(m.x, m.y, fung.x, fung.y);
+                return dist < too_close;
             });
 
             if(!there_is_nearby_fungus){
