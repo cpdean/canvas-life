@@ -78,6 +78,12 @@ var Zeds = function() {
         var default_mushroom_color = "#ddd";
         this.color = default_mushroom_color;
         this.setup_next_action = function() {
+            if (this.hunger < 10) {
+                this.color = "#f00";
+            }
+            else {
+                this.color = default_mushroom_color;
+            }
             if (this.hunger >= 200) {
                 this.next_action = this.reproduce;
             }
