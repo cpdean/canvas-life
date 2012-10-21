@@ -12,7 +12,7 @@ var Zeds = function() {
         this.width = this.height = 10;
 
         this.hunger = 100;
-        this.hunger_decay = 10;
+        this.hunger_decay = 1;
 
         this.strength = 2;
         this.health = 10;
@@ -51,6 +51,7 @@ var Zeds = function() {
     Agent.prototype.no_action = function() {
         return this;
     };
+
     Agent.prototype.death = function() {
         return new Dead(this);
     }
@@ -68,6 +69,57 @@ var Zeds = function() {
         this.color = "#488";
     };
     Zombie.prototype = new Agent();
+
+    var Mushroom = function(x,y) {
+        mushroom = this;
+        Agent.call(this,x,y);
+        this.hunger_decay = -5;
+        this.setup_next_action = function() {
+            if (this.hunger >= 200) {
+                this.next_action = this.reproduce;
+            }
+            if (this.hunger > 250) {
+                console.log("uh oh");
+            }
+        };
+
+        this.reproduce = function() {
+
+            var there_is_nearby_fungus = false;
+
+            var fungus_agents = _.filter(z.agents, function(a){
+                return a instanceof Mushroom;
+            });
+
+            there_is_nearby_fungus = _.any(fungus_agents, function(fung){
+                if (mushroom == fung) {
+                    return false;
+                }
+                debugger;
+                var too_close = 100;
+                var x_d, y_d, distance;
+                x_d = (mushroom.x - fung.x);
+                x_d = x_d * x_d;
+                y_d = (mushroom.y - fung.y);
+                y_d = y_d * y_d;
+                distance = Math.sqrt(x_d * y_d);
+                return distance < too_close;
+            });
+
+            if(there_is_nearby_fungus){
+                // give up early
+                return this;
+            }
+
+            this.hunger = 1;
+            var x = Math.random() * z.canvas.width;
+            var y = Math.random() * z.canvas.height;
+            var m = new Mushroom(x,y);
+            z.agents.push(m);
+            return this;
+        };
+    };
+    Mushroom.prototype = new Agent();
 
     var Dead = function(original) {
         console.log(original + " died!");
@@ -105,7 +157,8 @@ var Zeds = function() {
     z.start = function() {
         //background
         z.agents = [];
-        z.agents.push(new Agent(30,30));
+        z.agents.push(new Mushroom(30,30));
+        z.agents.push(new Squirrel(100,100));
         //z.agents.push(new Squirrel(10,10));
         //z.agents.push(new Zombie(300,100));
         z.loop = setInterval(z.game_loop, 1000 / z.FPS);
