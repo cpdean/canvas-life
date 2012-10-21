@@ -33,6 +33,15 @@ var Zeds = function() {
 
     };
 
+    Agent.prototype.distance = function(otherAgent) {
+        var x_d, y_d;
+        x_d = (this.x - otherAgent.x);
+        x_d = x_d * x_d;
+        y_d = (this.y- otherAgent.y);
+        y_d = y_d * y_d;
+        return Math.sqrt(x_d * y_d);
+    };
+
     Agent.prototype.take_turn = function() {
         this.apply_hunger();
         this.setup_next_action();
@@ -93,14 +102,6 @@ var Zeds = function() {
             }
         };
 
-        var distance = function(x1, y1, x2, y2) {
-            var x_d, y_d;
-            x_d = (x1 - x2);
-            x_d = x_d * x_d;
-            y_d = (y1- y2);
-            y_d = y_d * y_d;
-            return Math.sqrt(x_d * y_d);
-        };
 
         this.reproduce = function() {
 
@@ -117,7 +118,7 @@ var Zeds = function() {
 
             there_is_nearby_fungus = _.any(fungus_agents, function(fung){
                 var too_close = 100;
-                dist = distance(m.x, m.y, fung.x, fung.y);
+                dist = m.distance(fung);
                 return dist < too_close;
             });
 
