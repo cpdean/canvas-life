@@ -73,6 +73,7 @@ var Zeds = function() {
     var Mushroom = function(x,y) {
         mushroom = this;
         Agent.call(this,x,y);
+        this.width = this.height = 10;
         this.hunger_decay = -5;
         this.setup_next_action = function() {
             if (this.hunger >= 200) {
@@ -99,9 +100,6 @@ var Zeds = function() {
             });
 
             there_is_nearby_fungus = _.any(fungus_agents, function(fung){
-                if (mushroom == fung) {
-                    return false;
-                }
                 var too_close = 100;
                 var x_d, y_d, distance;
                 x_d = (m.x - fung.x);
