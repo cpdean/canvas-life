@@ -87,8 +87,8 @@ var Zeds = function() {
             if (this.hunger >= 200) {
                 this.next_action = this.reproduce;
             }
-            if (this.hunger > 250) {
-                console.log("uh oh");
+            else {
+                this.next_action = this.no_action;
             }
         };
 
