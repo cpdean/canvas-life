@@ -76,7 +76,8 @@ var Zeds = function() {
         this.width = original.width;
         this.height = original.height;
 
-        this.take_turn = function(){
+        this.death = function () {
+            // delete
         }
 
         this.color = "#444";
@@ -92,11 +93,13 @@ var Zeds = function() {
     z.game_loop = function() {
         z.ctx.clearRect(0,0,z.canvas.width,z.canvas.height);
         z.draw_environment();
-        for(var i in z.agents){
+        for(var i in z.agents) {
             z.agents[i].draw();
             z.agents[i].take_turn();
             z.agents[i] = z.agents[i].next_action();
         }
+        // garbage collect
+        z.agents = _.filter(z.agents,function(a){ return a; });
     };
 
     z.start = function() {
