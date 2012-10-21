@@ -73,7 +73,7 @@ var Zeds = function() {
     var Mushroom = function(x,y) {
         mushroom = this;
         Agent.call(this,x,y);
-        this.width = this.height = 10;
+        this.width = this.height = 6;
         this.hunger_decay = -5;
         var default_mushroom_color = "#ddd";
         this.color = default_mushroom_color;
