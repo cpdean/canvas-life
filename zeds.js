@@ -39,7 +39,8 @@ var Zeds = function() {
         x_d = x_d * x_d;
         y_d = (this.y- otherAgent.y);
         y_d = y_d * y_d;
-        return Math.sqrt(x_d * y_d);
+        var d = Math.abs(x_d + y_d);
+        return Math.sqrt(d);
     };
 
     Agent.prototype.take_turn = function() {
