@@ -113,9 +113,7 @@ var Zeds = function() {
             // to the game if it's near another
             var there_is_nearby_fungus = false;
 
-            var fungus_agents = _.filter(z.agents, function(a){
-                return a instanceof Mushroom;
-            });
+            var fungus_agents = z.mushrooms();
 
             there_is_nearby_fungus = _.any(fungus_agents, function(fung){
                 var too_close = 100;
@@ -151,6 +149,12 @@ var Zeds = function() {
     z.draw_environment = function() {
         z.ctx.fillStyle = "#332";
         z.ctx.fillRect(0,0,z.canvas.width,z.canvas.height);
+    };
+
+    z.mushrooms = function() {
+        return _.filter(z.agents, function(a){
+            return a instanceof Mushroom;
+        });
     };
 
     z.game_loop = function() {
