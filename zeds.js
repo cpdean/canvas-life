@@ -52,9 +52,6 @@ var Zeds = function() {
         return this;
     };
     Agent.prototype.death = function() {
-        setTimeout(function(){
-            z.stop();
-        },200);
         return new Dead(this);
     }
 
@@ -79,12 +76,8 @@ var Zeds = function() {
         this.width = original.width;
         this.height = original.height;
 
-        this.take_turn = function() {
-            // skip turn;
-        };
-
-        this.next_action = function() {
-        };
+        this.take_turn = function(){
+        }
 
         this.color = "#444";
     };
