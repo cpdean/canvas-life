@@ -148,7 +148,17 @@ var Zeds = function() {
 
             var vector_to_food = vector_to(food_agent);
             var normalized = get_unit_vector(vector_to_food);
-            var movement = scalar_multiply(normalized, this.movement_speed);
+
+            //scale magnitude of movement back so you don't overshoot
+            if (get_magnitude(vector_to_food) > this.movement_speed){
+                var movement_distance = this.movement_speed;
+            }
+            else {
+                var movement_distance = get_magnitude(vector_to_food);
+            }
+
+            var movement = scalar_multiply(normalized, movement_distance);
+
 
             return function() {
                 //actually update position
