@@ -138,8 +138,19 @@ var Zeds = function() {
                 m = 1/m;
                 return scalar_multiply(vector, m);
             }
-            return function(food_agent) {
+
+            function apply_vector(agent, movement) {
+                agent.x += movement.x;
+                agent.y += movement.y;
+            }
+
+            var vector_to_food = vector_to(food_agent);
+            var normalized = get_unit_vector(vector_to_food);
+            var movement = scalar_multiply(normalized, this.movement_speed);
+
+            return function() {
                 //actually update position
+                apply_vector(squirrel, normalized);
                 return squirrel;
             };
         };
@@ -250,7 +261,7 @@ var Zeds = function() {
         //background
         z.agents = [];
         z.agents.push(new Mushroom(30,30));
-        z.agents.push(new Squirrel(100,100));
+        z.agents.push(new Squirrel(30,100));
         //z.agents.push(new Squirrel(10,10));
         //z.agents.push(new Zombie(300,100));
         z.loop = setInterval(z.game_loop, 1000 / z.FPS);
