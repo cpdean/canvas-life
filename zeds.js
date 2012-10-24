@@ -66,6 +66,10 @@ var Zeds = function() {
         return new Dead(this);
     }
 
+    Agent.prototype.remove = function() {
+        return;
+    }
+
 
     var Squirrel = function(x,y) {
         var squirrel = this;
@@ -76,7 +80,7 @@ var Zeds = function() {
  
             // ARE YOU GON DIE??
             if (this.hunger <= 0) {
-                this.next_action = this.death;
+                return this.next_action = this.death;
             }
 
             // CAN YOU EAT???
@@ -87,7 +91,7 @@ var Zeds = function() {
             });
             if (touching_food.length > 0) {
                 // return a function that will eat the food
-                this.next_action = this.next_eat(touching_food[0]);
+                return this.next_action = this.next_eat(touching_food[0]);
             }
 
             // WHERE IS NEAREST FOOD???
@@ -97,17 +101,23 @@ var Zeds = function() {
             
             if (sorted_foods.length > 0) {
                 // return a function to move to the nearest food
-                this.next_action = this.move_to(food[0]);
+                return this.next_action = this.move_to(food[0]);
             }
             else {
-                this.next_action = this.no_action;
+                return this.next_action = this.no_action;
             }
 
         };
 
         this.next_eat = function(food_agent) {
             // eat the food, removing it from the game
-            return this;
+            return function() {
+                if (food_agent.health > 0) {
+                    food_agent.health = -100;
+                    this.hunger += 50;
+                }
+                return squirrel;
+            };
         };
 
         this.move_to = function(food_agent) {
@@ -186,6 +196,12 @@ var Zeds = function() {
         this.color = default_mushroom_color;
 
         this.setup_next_action = function() {
+            if (this.hunger < -10 || this.health < -10) {
+                return this.next_action = this.remove;
+            }
+            if (this.hunger < 0 || this.health < 0) {
+                return this.next_action = this.death;
+            }
             if (this.hunger < 30) {
                 this.color = "#f00";
             }
@@ -193,10 +209,10 @@ var Zeds = function() {
                 this.color = default_mushroom_color;
             }
             if (this.hunger >= 200) {
-                this.next_action = this.reproduce;
+                return this.next_action = this.reproduce;
             }
             else {
-                this.next_action = this.no_action;
+                return this.next_action = this.no_action;
             }
         };
 
@@ -273,6 +289,9 @@ var Zeds = function() {
         //background
         z.agents = [];
         z.agents.push(new Mushroom(30,30));
+        z.agents.push(new Mushroom(200,200));
+        z.agents.push(new Mushroom(30,250));
+        z.agents.push(new Mushroom(300,250));
         z.agents.push(new Squirrel(30,100));
         //z.agents.push(new Squirrel(10,10));
         //z.agents.push(new Zombie(300,100));
