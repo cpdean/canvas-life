@@ -111,11 +111,13 @@ var Zeds = function() {
         };
 
         this.move_to = function(food_agent) {
-            // move to the other agent, landing on it or going as far
-            // as possible
-            function vector_to_food(food) {
-                return {x : squirrel.x - food.x,
-                        y : squirrel.y - food.y};
+            // returns a function that updates the position of
+            // this agent, moving it as close as possible to
+            // the food agent
+            var new_x,new_y;
+            function vector_to(food) {
+                return {x :  food.x - squirrel.x,
+                        y :  food.y - squirrel.y};
             }
 
             function scalar_multiply(vector,scalar) {
