@@ -145,6 +145,7 @@ var Zeds = function() {
         this.reproduce = function() {
 
             this.hunger = 1;
+            return this; //neuter
             var x = Math.random() * z.canvas.width;
             var y = Math.random() * z.canvas.height;
             var m = new Mushroom(x,y);
