@@ -106,6 +106,31 @@ var Zeds = function() {
         this.move_to = function(food_agent) {
             // move to the other agent, landing on it or going as far
             // as possible
+            function vector_to_food(food) {
+                return {x : squirrel.x - food.x,
+                        y : squirrel.y - food.y};
+            }
+
+            function scalar_multiply(vector,scalar) {
+                var v = {};
+                v.x = vector.x * scalar;
+                v.y = vector.y * scalar;
+                return v;
+            }
+
+            function get_magnitude(vector){
+                var origin = new Agent(0,0);
+                var to = new Agent(vector.x,vector.y);
+                return origin.distance(to);
+                //lol
+            }
+
+            function get_unit_vector(vector) {
+                var v = {};
+                var m = get_magnitude(vector);
+                m = 1/m;
+                return scalar_multiply(vector, m);
+            }
         };
 
     };
