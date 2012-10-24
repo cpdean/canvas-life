@@ -83,6 +83,10 @@ var Zeds = function() {
                 return this.next_action = this.death;
             }
 
+            if (this.hunger > 200) {
+                return this.next_action = this.reproduce;
+            }
+
             // CAN YOU EAT???
             var food = z.mushrooms();
             var touching_food = _.filter(food, function(f) {
@@ -175,6 +179,15 @@ var Zeds = function() {
                 apply_vector(squirrel, movement);
                 return squirrel;
             };
+        };
+
+        this.reproduce = function() {
+            this.hunger = 50;
+            var x = Math.random() * z.canvas.width;
+            var y = Math.random() * z.canvas.height;
+            var s = new Squirrel(x, y);
+            z.agents.push(s);
+            return this;
         };
 
     };
