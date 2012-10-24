@@ -4,7 +4,7 @@ var Zeds = function() {
     z.ctx = z.canvas.getContext("2d");
     z.canvas.width = 600;
     z.canvas.height = 400;
-    z.FPS = 5;
+    z.FPS = 2;
 
     var Agent = function(x,y) {
         this.x = x;
@@ -16,7 +16,7 @@ var Zeds = function() {
 
         this.strength = 2;
         this.health = 10;
-        this.movement_speed = 10;
+        this.movement_speed = 20;
         this.attack_speed = 10;
         this.intelligence = 1;
         this.color = "#eee";
@@ -152,7 +152,7 @@ var Zeds = function() {
 
             return function() {
                 //actually update position
-                apply_vector(squirrel, normalized);
+                apply_vector(squirrel, movement);
                 return squirrel;
             };
         };
