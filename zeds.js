@@ -16,7 +16,7 @@ var Zeds = function() {
 
         this.strength = 2;
         this.health = 10;
-        this.movement_speed = 20;
+        this.movement_speed = 10;
         this.attack_speed = 10;
         this.intelligence = 1;
         this.color = "#eee";
@@ -119,6 +119,7 @@ var Zeds = function() {
                 if (food_agent.health > 0) {
                     food_agent.health = -100;
                     this.hunger += 50;
+                    this.movement_speed -= 1;
                 }
                 return squirrel;
             };
