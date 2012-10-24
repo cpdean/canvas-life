@@ -4,7 +4,7 @@ var Zeds = function() {
     z.ctx = z.canvas.getContext("2d");
     z.canvas.width = 600;
     z.canvas.height = 400;
-    z.FPS = 2;
+    z.FPS = 20;
 
     var Agent = function(x,y) {
         this.x = x;
@@ -101,7 +101,7 @@ var Zeds = function() {
             
             if (sorted_foods.length > 0) {
                 // return a function to move to the nearest food
-                return this.next_action = this.move_to(food[0]);
+                return this.next_action = this.move_to(sorted_foods[0]);
             }
             else {
                 return this.next_action = this.no_action;
@@ -220,7 +220,6 @@ var Zeds = function() {
         this.reproduce = function() {
 
             this.hunger = 1;
-            return this; //neuter
             var x = Math.random() * z.canvas.width;
             var y = Math.random() * z.canvas.height;
             var m = new Mushroom(x,y);
@@ -290,8 +289,7 @@ var Zeds = function() {
         z.agents = [];
         z.agents.push(new Mushroom(30,30));
         z.agents.push(new Mushroom(200,200));
-        z.agents.push(new Mushroom(30,250));
-        z.agents.push(new Mushroom(300,250));
+        z.agents.push(new Mushroom(30,200));
         z.agents.push(new Squirrel(30,100));
         //z.agents.push(new Squirrel(10,10));
         //z.agents.push(new Zombie(300,100));
